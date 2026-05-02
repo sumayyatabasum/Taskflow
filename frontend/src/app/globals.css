@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap");
-
 :root {
   --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
@@ -38,6 +36,7 @@ body::before {
   z-index: 0;
 }
 
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -52,45 +51,58 @@ body::before {
   background: #334155;
 }
 
+/* Components */
 @layer components {
   .card {
     @apply bg-[#0d1117] border border-white/[0.06] rounded-2xl shadow-xl shadow-black/20;
   }
+
   .btn-primary {
     @apply bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-semibold px-4 py-2 rounded-xl transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30;
   }
+
   .btn-secondary {
     @apply bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 font-medium px-4 py-2 rounded-xl transition-all duration-150;
   }
+
   .input {
     @apply w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-slate-100 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all duration-150;
   }
+
   .badge-todo {
     @apply bg-slate-800/80 text-slate-400 text-xs font-medium px-2.5 py-0.5 rounded-full border border-slate-700/50;
   }
+
   .badge-in_progress {
     @apply bg-amber-500/15 text-amber-400 text-xs font-medium px-2.5 py-0.5 rounded-full border border-amber-500/20;
   }
+
   .badge-done {
     @apply bg-emerald-500/15 text-emerald-400 text-xs font-medium px-2.5 py-0.5 rounded-full border border-emerald-500/20;
   }
+
   .badge-low {
     @apply bg-slate-800/80 text-slate-500 text-xs px-2.5 py-0.5 rounded-full border border-slate-700/50;
   }
+
   .badge-medium {
     @apply bg-blue-500/15 text-blue-400 text-xs px-2.5 py-0.5 rounded-full border border-blue-500/20;
   }
+
   .badge-high {
     @apply bg-red-500/15 text-red-400 text-xs px-2.5 py-0.5 rounded-full border border-red-500/20;
   }
+
   .glass {
     @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.06];
   }
+
   .gradient-text {
     @apply bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent;
   }
 }
 
+/* Select styling */
 select {
   color-scheme: dark;
 }
