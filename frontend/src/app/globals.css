@@ -90,7 +90,7 @@ body::before {
     @apply bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent;
   }
 }
-/* Fix select dropdown options */
+
 select {
   color-scheme: dark;
 }

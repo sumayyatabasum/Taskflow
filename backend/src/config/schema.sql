@@ -1,5 +1,4 @@
 -- TaskFlow Database Schema
--- Run this in your PostgreSQL/Supabase SQL editor
 
 -- Users table
 CREATE TABLE IF NOT EXISTS users (

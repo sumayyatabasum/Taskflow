@@ -185,17 +185,48 @@ npm run dev
 ```bash
 taskflow/
 ├── backend/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── routes/
-│   ├── config/
-│   └── index.js
+│   ├── src/
+│   │   ├── config/
+│   │   │   ├── db.js          # PostgreSQL connection pool
+│   │   │   └── schema.sql     # Database schema
+│   │   ├── controllers/
+│   │   │   ├── authController.js
+│   │   │   ├── projectController.js
+│   │   │   ├── taskController.js
+│   │   │   └── dashboardController.js
+│   │   ├── middleware/
+│   │   │   ├── auth.js        # JWT + RBAC middleware
+│   │   │   └── errorHandler.js
+│   │   ├── routes/
+│   │   │   └── index.js       # All API routes
+│   │   └── index.js           # Express app entry point
+│   ├── .env.example
+│   ├── railway.toml
+│   └── package.json
 │
 └── frontend/
-    ├── app/
-    ├── components/
-    ├── hooks/
-    └── lib/
+    ├── src/
+    │   ├── app/
+    │   │   ├── page.tsx           # Root redirect
+    │   │   ├── login/page.tsx
+    │   │   ├── signup/page.tsx
+    │   │   ├── dashboard/page.tsx
+    │   │   └── projects/
+    │   │       ├── page.tsx
+    │   │       └── [projectId]/page.tsx
+    │   ├── components/
+    │   │   ├── AppLayout.tsx      # Auth guard + layout
+    │   │   ├── Sidebar.tsx        # Navigation
+    │   │   ├── ui/Modal.tsx
+    │   │   └── tasks/
+    │   │       ├── TaskCard.tsx
+    │   │       └── TaskForm.tsx
+    │   ├── hooks/useAuth.tsx      # Auth context
+    │   ├── lib/api.ts             # Axios instance
+    │   └── types/index.ts         # TypeScript types
+    ├── .env.example
+    ├── railway.toml
+    └── package.json
 ```
 
 ---
@@ -234,7 +265,7 @@ taskflow/
 Sumayya Tabasum
 
 - GitHub: https://github.com/sumayyatabasum
-- LinkedIn: (add your link)
+- LinkedIn: https://www.linkedin.com/in/shaik-sumayya-68a9582a4/
 
 ---
 
