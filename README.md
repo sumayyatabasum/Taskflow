@@ -6,10 +6,10 @@ A full-stack collaborative task management platform designed to help teams effic
 
 ## 🌐 Live Links
 
-- 🔗 Frontend: https://taskflow-frontend.railway.app
-- 🔗 Backend API: https://taskflow-backend.railway.app
+- 🔗 Frontend: https://diplomatic-love-production.up.railway.app
+- 🔗 Backend API: https://taskflow-production-4aa5.up.railway.app/api
 - 📂 Repository: https://github.com/sumayyatabasum/taskflow
-
+  
 ---
 
 ## 📌 Overview
@@ -56,6 +56,22 @@ This project demonstrates real-world backend architecture, authentication, role-
 
 - Admins: Full control
 - Members: Limited to assigned tasks
+
+---
+
+## 📸 Screenshots
+
+### 🔐 Login Page
+![Login](./screenshots/login.png)
+
+### 📊 Dashboard
+![Dashboard](./screenshots/dashboard.png)
+
+### 📁 Projects
+![Projects](./screenshots/projects.png)
+
+### ✅ Tasks
+![Tasks](./screenshots/tasks.png)
 
 ---
 
@@ -258,15 +274,6 @@ taskflow/
 
 ---
 
-## 👩‍💻 Author
-
-Sumayya Tabasum
-
-- GitHub: https://github.com/sumayyatabasum
-- LinkedIn: https://www.linkedin.com/in/shaik-sumayya-68a9582a4/
-
----
-
 ## ⭐ Conclusion
 
 ### TaskFlow demonstrates full-stack development skills including:
@@ -278,3 +285,22 @@ Sumayya Tabasum
 - Deployment
 
 This project is built to simulate a real-world team collaboration tool.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository
+2. Create a new branch
+3. Make your changes
+4. Submit a pull request
+   
+---
+## 👩‍💻 Author
+
+Sumayya Tabasum
+
+- GitHub: https://github.com/sumayyatabasum
+- LinkedIn: https://www.linkedin.com/in/shaik-sumayya-68a9582a4/
