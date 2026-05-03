@@ -201,46 +201,58 @@ taskflow/
 ├── backend/
 │   ├── src/
 │   │   ├── config/
-│   │   │   ├── db.js          # PostgreSQL connection pool
-│   │   │   └── schema.sql     # Database schema
+│   │   │   ├── db.js
+│   │   │   └── schema.sql
 │   │   ├── controllers/
 │   │   │   ├── authController.js
+│   │   │   ├── dashboardController.js
 │   │   │   ├── projectController.js
-│   │   │   ├── taskController.js
-│   │   │   └── dashboardController.js
+│   │   │   └── taskController.js
 │   │   ├── middleware/
-│   │   │   ├── auth.js        # JWT + RBAC middleware
+│   │   │   ├── auth.js
 │   │   │   └── errorHandler.js
 │   │   ├── routes/
-│   │   │   └── index.js       # All API routes
-│   │   └── index.js           # Express app entry point
+│   │   │   └── index.js
+│   │   └── index.js
+│   ├── .env
 │   ├── .env.example
-│   ├── railway.toml
-│   └── package.json
+│   ├── package.json
+│   └── railway.toml
 │
-└── frontend/
-    ├── src/
-    │   ├── app/
-    │   │   ├── page.tsx           # Root redirect
-    │   │   ├── login/page.tsx
-    │   │   ├── signup/page.tsx
-    │   │   ├── dashboard/page.tsx
-    │   │   └── projects/
-    │   │       ├── page.tsx
-    │   │       └── [projectId]/page.tsx
-    │   ├── components/
-    │   │   ├── AppLayout.tsx      # Auth guard + layout
-    │   │   ├── Sidebar.tsx        # Navigation
-    │   │   ├── ui/Modal.tsx
-    │   │   └── tasks/
-    │   │       ├── TaskCard.tsx
-    │   │       └── TaskForm.tsx
-    │   ├── hooks/useAuth.tsx      # Auth context
-    │   ├── lib/api.ts             # Axios instance
-    │   └── types/index.ts         # TypeScript types
-    ├── .env.example
-    ├── railway.toml
-    └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── dashboard/page.tsx
+│   │   │   ├── login/page.tsx
+│   │   │   ├── projects/
+│   │   │   │   ├── page.tsx
+│   │   │   │   └── [projectId]/page.tsx
+│   │   │   ├── signup/page.tsx
+│   │   │   ├── globals.css
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── components/
+│   │   │   ├── tasks/
+│   │   │   │   ├── TaskCard.tsx
+│   │   │   │   └── TaskForm.tsx
+│   │   │   ├── AppLayout.tsx
+│   │   │   └── Modal.tsx
+│   │   ├── hooks/useAuth.tsx
+│   │   ├── lib/api.ts
+│   │   └── types/index.ts
+│   ├── .env.example
+│   ├── next.config.js
+│   ├── package.json
+│   ├── postcss.config.js
+│   ├── tailwind.config.js
+│   └── tsconfig.json
+│
+├── screenshots/
+│   ├── dashboard.png
+│   ├── projects.png
+│   └── tasks.png
+├── .gitignore
+└── README.md
 ```
 
 ---
