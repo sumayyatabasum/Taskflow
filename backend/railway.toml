@@ -1,8 +1,8 @@
 [build]
-builder = "nixpacks"
+builder = "RAILPACK"
 
 [deploy]
 startCommand = "node src/index.js"
 healthcheckPath = "/health"
 healthcheckTimeout = 30
-restartPolicyType = "on_failure"
+restartPolicyType = "ON_FAILURE"
