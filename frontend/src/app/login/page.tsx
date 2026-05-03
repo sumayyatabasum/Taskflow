@@ -153,7 +153,7 @@ export default function LoginPage() {
               href="/signup"
               className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors"
             >
-              Create one free
+              Create one
             </Link>
           </p>
         </div>
