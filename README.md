@@ -12,6 +12,16 @@ A full-stack collaborative task management platform designed to help teams effic
   
 ---
 
+## ⚠️ Deployment Note
+
+The application was successfully deployed on Railway, and both frontend and backend services are running.
+
+However, due to a temporary Railway DNS resolution issue (NXDOMAIN), the live URL may not be accessible at the moment.
+
+All features are fully implemented and verified locally.
+
+---
+
 ## 📌 Overview
 
 TaskFlow is a scalable full-stack web application that enables teams to:
