@@ -61,7 +61,6 @@ This project demonstrates real-world backend architecture, authentication, role-
 
 ## 🧱 Tech Stack
 
-```bash
 | Layer      | Technology                           |
 | ---------- | ------------------------------------ |
 | Frontend   | Next.js 14, TypeScript, Tailwind CSS |
@@ -70,7 +69,6 @@ This project demonstrates real-world backend architecture, authentication, role-
 | Auth       | JWT, bcrypt                          |
 | Charts     | Recharts                             |
 | Deployment | Railway                              |
-```
 
 ---
 
