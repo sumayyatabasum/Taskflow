@@ -32,10 +32,15 @@ app.use((req, res) => {
 // Error handler
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
+
+if (!PORT) {
+  throw new Error("PORT is not defined");
+}
+
 app.listen(PORT, () => {
-  console.log(`🚀 TaskFlow API running on port ${PORT}`);
-  console.log(`   Environment: ${process.env.NODE_ENV || "development"}`);
+  console.log(`TaskFlow API running on port ${PORT}`);
+  console.log(` Environment: ${process.env.NODE_ENV || "development"}`);
 });
 
 module.exports = app;
