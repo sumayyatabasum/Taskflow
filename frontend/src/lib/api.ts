@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://taskflow-production-4aa5.up.railway.app/api",
+  baseURL: "https://taskflow-production-8c3b.up.railway.app/api",
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
