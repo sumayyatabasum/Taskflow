@@ -1,8 +1,5 @@
 const express = require("express");
-const { body } = require("express-validator");
-const { authenticate } = require("../middleware/auth");
 
-const { signup, login, getMe } = require("../controllers/authController");
 const { getDashboardStats } = require("../controllers/dashboardController");
 const {
   getTodos,
@@ -25,25 +22,6 @@ const {
 const { getNotes, updateNotes } = require("../controllers/notesController");
 
 const router = express.Router();
-
-// ── Auth ────────────────────────────────────────────────────────────────────
-router.post(
-  "/auth/signup",
-  [
-    body("name").trim().notEmpty(),
-    body("email").isEmail(),
-    body("password").isLength({ min: 6 }),
-  ],
-  signup,
-);
-
-router.post(
-  "/auth/login",
-  [body("email").isEmail(), body("password").notEmpty()],
-  login,
-);
-
-router.get("/auth/me", authenticate, getMe);
 
 // ── Dashboard ────────────────────────────────────────────────────────────────
 router.get("/dashboard", getDashboardStats); // no auth needed for single-user
