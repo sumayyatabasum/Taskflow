@@ -1,0 +1,272 @@
+[
+  {
+    "id": "prob-stats",
+    "name": "Probability and Statistics",
+    "topics": [
+      {
+        "id": "ps-01",
+        "name": "Counting (permutations and combinations)",
+        "status": "pending"
+      },
+      {
+        "id": "ps-02",
+        "name": "Probability axioms, sample space, events",
+        "status": "pending"
+      },
+      {
+        "id": "ps-03",
+        "name": "Independent and mutually exclusive events",
+        "status": "pending"
+      },
+      {
+        "id": "ps-04",
+        "name": "Marginal, conditional and joint probability",
+        "status": "pending"
+      },
+      { "id": "ps-05", "name": "Bayes Theorem", "status": "pending" },
+      {
+        "id": "ps-06",
+        "name": "Conditional expectation and variance",
+        "status": "pending"
+      },
+      {
+        "id": "ps-07",
+        "name": "Mean, median, mode and standard deviation",
+        "status": "pending"
+      },
+      {
+        "id": "ps-08",
+        "name": "Correlation and covariance",
+        "status": "pending"
+      },
+      {
+        "id": "ps-09",
+        "name": "Random variables, discrete distributions (Uniform, Bernoulli, Binomial)",
+        "status": "pending"
+      },
+      {
+        "id": "ps-10",
+        "name": "Continuous distributions (Uniform, Exponential, Poisson, Normal)",
+        "status": "pending"
+      },
+      {
+        "id": "ps-11",
+        "name": "Standard normal, t-distribution, chi-squared distributions",
+        "status": "pending"
+      },
+      {
+        "id": "ps-12",
+        "name": "CDF, Conditional PDF, Central Limit Theorem",
+        "status": "pending"
+      },
+      {
+        "id": "ps-13",
+        "name": "Confidence interval, z-test, t-test, chi-squared test",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "id": "lin-alg",
+    "name": "Linear Algebra",
+    "topics": [
+      { "id": "la-01", "name": "Vector space, subspaces", "status": "pending" },
+      {
+        "id": "la-02",
+        "name": "Linear dependence and independence of vectors",
+        "status": "pending"
+      },
+      {
+        "id": "la-03",
+        "name": "Matrices, projection matrix, orthogonal matrix, idempotent matrix",
+        "status": "pending"
+      },
+      {
+        "id": "la-04",
+        "name": "Quadratic forms, partition matrix and their properties",
+        "status": "pending"
+      },
+      {
+        "id": "la-05",
+        "name": "Systems of linear equations and solutions; Gaussian elimination",
+        "status": "pending"
+      },
+      {
+        "id": "la-06",
+        "name": "Eigenvalues and eigenvectors",
+        "status": "pending"
+      },
+      {
+        "id": "la-07",
+        "name": "Determinant, rank, nullity, projections",
+        "status": "pending"
+      },
+      {
+        "id": "la-08",
+        "name": "LU decomposition, Singular Value Decomposition (SVD)",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "id": "calc-opt",
+    "name": "Calculus and Optimization",
+    "topics": [
+      {
+        "id": "co-01",
+        "name": "Functions of a single variable, limit, continuity and differentiability",
+        "status": "pending"
+      },
+      { "id": "co-02", "name": "Taylor series", "status": "pending" },
+      { "id": "co-03", "name": "Maxima and minima", "status": "pending" },
+      {
+        "id": "co-04",
+        "name": "Optimization involving a single variable",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "id": "prog-dsa",
+    "name": "Programming, Data Structures and Algorithms",
+    "topics": [
+      { "id": "pd-01", "name": "Programming in Python", "status": "pending" },
+      {
+        "id": "pd-02",
+        "name": "Basic data structures: stacks, queues, linked lists, trees, hash tables",
+        "status": "pending"
+      },
+      {
+        "id": "pd-03",
+        "name": "Search algorithms: linear and binary search",
+        "status": "pending"
+      },
+      {
+        "id": "pd-04",
+        "name": "Basic sorting: selection, bubble, insertion sort",
+        "status": "pending"
+      },
+      {
+        "id": "pd-05",
+        "name": "Divide and conquer: mergesort, quicksort",
+        "status": "pending"
+      },
+      {
+        "id": "pd-06",
+        "name": "Introduction to graph theory",
+        "status": "pending"
+      },
+      {
+        "id": "pd-07",
+        "name": "Basic graph algorithms: traversals and shortest path",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "id": "dbms",
+    "name": "Database Management and Warehousing",
+    "topics": [
+      {
+        "id": "db-01",
+        "name": "ER model, relational model, relational algebra, tuple calculus",
+        "status": "pending"
+      },
+      { "id": "db-02", "name": "SQL", "status": "pending" },
+      {
+        "id": "db-03",
+        "name": "Integrity constraints, normal form, file organization, indexing",
+        "status": "pending"
+      },
+      {
+        "id": "db-04",
+        "name": "Data types, normalization, discretization, sampling, compression",
+        "status": "pending"
+      },
+      {
+        "id": "db-05",
+        "name": "Data warehouse modelling: schema for multidimensional data models",
+        "status": "pending"
+      },
+      {
+        "id": "db-06",
+        "name": "Concept hierarchies, measures: categorization and computations",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "id": "ml",
+    "name": "Machine Learning",
+    "topics": [
+      {
+        "id": "ml-01",
+        "name": "Simple and multiple linear regression, ridge regression",
+        "status": "pending"
+      },
+      { "id": "ml-02", "name": "Logistic regression", "status": "pending" },
+      {
+        "id": "ml-03",
+        "name": "k-Nearest Neighbour, Naive Bayes classifier",
+        "status": "pending"
+      },
+      {
+        "id": "ml-04",
+        "name": "Linear Discriminant Analysis, Support Vector Machine",
+        "status": "pending"
+      },
+      { "id": "ml-05", "name": "Decision trees", "status": "pending" },
+      {
+        "id": "ml-06",
+        "name": "Bias-variance trade-off, cross-validation (LOO, k-fold)",
+        "status": "pending"
+      },
+      {
+        "id": "ml-07",
+        "name": "Multi-layer perceptron, feed-forward neural network",
+        "status": "pending"
+      },
+      {
+        "id": "ml-08",
+        "name": "Clustering: k-means/k-medoid, hierarchical clustering",
+        "status": "pending"
+      },
+      {
+        "id": "ml-09",
+        "name": "Dimensionality reduction, PCA",
+        "status": "pending"
+      }
+    ]
+  },
+  {
+    "id": "ai",
+    "name": "Artificial Intelligence",
+    "topics": [
+      {
+        "id": "ai-01",
+        "name": "Search: informed, uninformed, adversarial",
+        "status": "pending"
+      },
+      {
+        "id": "ai-02",
+        "name": "Logic: propositional, predicate",
+        "status": "pending"
+      },
+      {
+        "id": "ai-03",
+        "name": "Conditional independence representation",
+        "status": "pending"
+      },
+      {
+        "id": "ai-04",
+        "name": "Exact inference through variable elimination",
+        "status": "pending"
+      },
+      {
+        "id": "ai-05",
+        "name": "Approximate inference through sampling",
+        "status": "pending"
+      }
+    ]
+  }
+]

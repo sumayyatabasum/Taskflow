@@ -1,0 +1,6 @@
+[
+  { "id": "theory", "name": "Theory" },
+  { "id": "pyq", "name": "PYQ" },
+  { "id": "revision", "name": "Revision" },
+  { "id": "mock", "name": "Mock Test" }
+]

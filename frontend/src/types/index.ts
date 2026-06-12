@@ -1,3 +1,4 @@
+// ── Auth ─────────────────────────────────────────────────────────────────────
 export interface User {
   id: string;
   name: string;
@@ -6,48 +7,72 @@ export interface User {
   avatar_color?: string;
 }
 
-export interface Project {
-  id: string;
-  name: string;
-  description?: string;
-  created_by: string;
-  created_at: string;
-  role: 'admin' | 'member';
-  member_count: number;
-  task_count: number;
-}
-
-export interface Member {
-  id: string;
-  name: string;
-  email: string;
-  avatar_color: string;
-  role: 'admin' | 'member';
-  joined_at: string;
-}
-
-export interface Task {
+// ── Todos ─────────────────────────────────────────────────────────────────────
+export interface Todo {
   id: string;
   title: string;
-  description?: string;
-  status: 'todo' | 'in_progress' | 'done';
-  priority: 'low' | 'medium' | 'high';
-  due_date?: string;
-  project_id: string;
-  created_by: string;
-  assigned_to?: string;
-  created_by_name?: string;
-  assigned_to_name?: string;
-  assigned_to_email?: string;
-  assigned_to_color?: string;
+  priority: "low" | "medium" | "high";
+  deadline?: string | null;
+  status: "pending" | "completed";
   created_at: string;
+}
+
+// ── Syllabus ──────────────────────────────────────────────────────────────────
+export type TopicStatus = "pending" | "in_progress" | "completed" | "skipped";
+
+export interface Topic {
+  id: string;
+  subject_id: string;
+  topic_name: string;
+  status: TopicStatus;
+  updated_at?: string;
+}
+
+export interface Subject {
+  id: string;
+  name: string;
+  sort_order: number;
+  topics: Topic[];
+}
+
+// ── Schedule ──────────────────────────────────────────────────────────────────
+export interface ScheduleActivity {
+  id: string;
+  activity_name: string;
+  sort_order: number;
+}
+
+export interface ScheduleRecord {
+  id: string;
+  date: string; // ISO date string "YYYY-MM-DD"
+  activity_id: string;
+  status: "completed" | "not_completed";
+}
+
+// ── Dashboard ─────────────────────────────────────────────────────────────────
+export interface SubjectProgress {
+  id: string;
+  name: string;
+  total: number;
+  completed: number;
+}
+
+export interface ConsistencyTrendPoint {
+  date: string;
+  pct: number;
 }
 
 export interface DashboardStats {
-  totalTasks: number;
-  tasksByStatus: { todo: number; in_progress: number; done: number };
-  tasksPerUser: Array<{ id: string; name: string; avatar_color: string; task_count: number }>;
-  overdueTasks: Array<Task & { project_name: string }>;
-  projects: Array<{ id: string; name: string; role: string; total_tasks: number; done_tasks: number }>;
-  myPendingTasks: Array<Task & { project_name: string }>;
+  todos: { total: number; completed: number; pending: number };
+  topics: {
+    total: number;
+    completed: number;
+    inProgress: number;
+    skipped: number;
+  };
+  subjectProgress: SubjectProgress[];
+  consistency: { last30Days: number; weekly: number; monthly: number };
+  streak: number;
+  dailyCompleted: number;
+  consistencyTrend: ConsistencyTrendPoint[];
 }

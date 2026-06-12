@@ -1,94 +1,150 @@
-const pool = require('../config/db');
+const db = require("../config/db");
 
-// GET /api/dashboard — global stats for current user
-const getDashboardStats = async (req, res, next) => {
+async function getDashboardStats(req, res, next) {
   try {
-    const userId = req.user.id;
+    // Todos
+    const todosResult = await db.query("SELECT status FROM todos");
+    const todos = todosResult.rows;
+    const totalTodos = todos.length;
+    const completedTodos = todos.filter((t) => t.status === "completed").length;
+    const pendingTodos = totalTodos - completedTodos;
 
-    // Total tasks across all user's projects
-    const totalTasksResult = await pool.query(
-      `SELECT COUNT(*) AS total
-       FROM tasks t
-       JOIN project_members pm ON pm.project_id = t.project_id AND pm.user_id = $1`,
-      [userId]
+    // Topics
+    const topicsResult = await db.query("SELECT status FROM topics");
+    const topics = topicsResult.rows;
+    const totalTopics = topics.length;
+    const completedTopics = topics.filter(
+      (t) => t.status === "completed",
+    ).length;
+    const inProgressTopics = topics.filter(
+      (t) => t.status === "in_progress",
+    ).length;
+    const skippedTopics = topics.filter((t) => t.status === "skipped").length;
+
+    // Subject-wise progress
+    const subjectProgress = await db.query(`
+      SELECT s.id, s.name,
+        COUNT(t.id) AS total,
+        SUM(CASE WHEN t.status = 'completed' THEN 1 ELSE 0 END) AS completed
+      FROM subjects s
+      LEFT JOIN topics t ON t.subject_id = s.id
+      GROUP BY s.id, s.name
+      ORDER BY s.sort_order, s.name
+    `);
+
+    // Schedule — last 30 days consistency
+    const scheduleResult = await db.query(`
+      SELECT date, status FROM schedule_records
+      WHERE date >= NOW() - INTERVAL '30 days'
+      ORDER BY date DESC
+    `);
+    const scheduleRecords = scheduleResult.rows;
+    const totalCells = scheduleRecords.length;
+    const completedCells = scheduleRecords.filter(
+      (r) => r.status === "completed",
+    ).length;
+    const consistencyPct =
+      totalCells > 0 ? Math.round((completedCells / totalCells) * 100) : 0;
+
+    // Study streak (consecutive days with ≥1 completed activity)
+    const streakResult = await db.query(`
+      SELECT DISTINCT date::date AS d
+      FROM schedule_records
+      WHERE status = 'completed'
+      ORDER BY d DESC
+    `);
+    let streak = 0;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    for (let i = 0; i < streakResult.rows.length; i++) {
+      const rowDate = new Date(streakResult.rows[i].d);
+      const expected = new Date(today);
+      expected.setDate(today.getDate() - i);
+      if (rowDate.toDateString() === expected.toDateString()) {
+        streak++;
+      } else {
+        break;
+      }
+    }
+
+    // Daily progress = completed todos today + completed schedule cells today
+    const todayStr = new Date().toISOString().split("T")[0];
+    const todayTodos = await db.query(
+      "SELECT COUNT(*) AS c FROM todos WHERE status='completed' AND created_at::date = $1",
+      [todayStr],
     );
-
-    // Tasks by status
-    const tasksByStatusResult = await pool.query(
-      `SELECT t.status, COUNT(*) AS count
-       FROM tasks t
-       JOIN project_members pm ON pm.project_id = t.project_id AND pm.user_id = $1
-       GROUP BY t.status`,
-      [userId]
+    const todaySchedule = await db.query(
+      "SELECT COUNT(*) AS c FROM schedule_records WHERE status='completed' AND date = $1",
+      [todayStr],
     );
+    const dailyCompleted =
+      Number(todayTodos.rows[0].c) + Number(todaySchedule.rows[0].c);
 
-    // Tasks per user (for projects where current user is admin)
-    const tasksPerUserResult = await pool.query(
-      `SELECT u.id, u.name, u.avatar_color, COUNT(t.id) AS task_count
-       FROM users u
-       JOIN tasks t ON t.assigned_to = u.id
-       JOIN project_members admin_pm ON admin_pm.project_id = t.project_id
-         AND admin_pm.user_id = $1 AND admin_pm.role = 'admin'
-       GROUP BY u.id, u.name, u.avatar_color
-       ORDER BY task_count DESC
-       LIMIT 10`,
-      [userId]
-    );
+    // Weekly consistency (last 7 days — ratio of completed to total cells)
+    const weekResult = await db.query(`
+      SELECT
+        SUM(CASE WHEN status='completed' THEN 1 ELSE 0 END) AS done,
+        COUNT(*) AS total
+      FROM schedule_records
+      WHERE date >= NOW() - INTERVAL '7 days'
+    `);
+    const weekDone = Number(weekResult.rows[0].done) || 0;
+    const weekTotal = Number(weekResult.rows[0].total) || 0;
+    const weeklyConsistency =
+      weekTotal > 0 ? Math.round((weekDone / weekTotal) * 100) : 0;
 
-    // Overdue tasks
-    const overdueResult = await pool.query(
-      `SELECT t.id, t.title, t.due_date, t.priority, t.project_id, p.name AS project_name,
-              u.name AS assigned_to_name
-       FROM tasks t
-       JOIN projects p ON p.id = t.project_id
-       JOIN project_members pm ON pm.project_id = t.project_id AND pm.user_id = $1
-       LEFT JOIN users u ON u.id = t.assigned_to
-       WHERE t.due_date < CURRENT_DATE AND t.status != 'done'
-       ORDER BY t.due_date ASC
-       LIMIT 10`,
-      [userId]
-    );
+    // Monthly consistency (current month)
+    const monthResult = await db.query(`
+      SELECT
+        SUM(CASE WHEN status='completed' THEN 1 ELSE 0 END) AS done,
+        COUNT(*) AS total
+      FROM schedule_records
+      WHERE TO_CHAR(date,'YYYY-MM') = TO_CHAR(NOW(),'YYYY-MM')
+    `);
+    const monthDone = Number(monthResult.rows[0].done) || 0;
+    const monthTotal = Number(monthResult.rows[0].total) || 0;
+    const monthlyConsistency =
+      monthTotal > 0 ? Math.round((monthDone / monthTotal) * 100) : 0;
 
-    // Projects summary
-    const projectsResult = await pool.query(
-      `SELECT p.id, p.name, pm.role,
-              COUNT(t.id) AS total_tasks,
-              COUNT(CASE WHEN t.status = 'done' THEN 1 END) AS done_tasks
-       FROM projects p
-       JOIN project_members pm ON pm.project_id = p.id AND pm.user_id = $1
-       LEFT JOIN tasks t ON t.project_id = p.id
-       GROUP BY p.id, p.name, pm.role
-       ORDER BY p.created_at DESC`,
-      [userId]
-    );
-
-    // My assigned tasks
-    const myTasksResult = await pool.query(
-      `SELECT t.id, t.title, t.status, t.priority, t.due_date, p.name AS project_name
-       FROM tasks t
-       JOIN projects p ON p.id = t.project_id
-       WHERE t.assigned_to = $1 AND t.status != 'done'
-       ORDER BY t.due_date ASC NULLS LAST
-       LIMIT 5`,
-      [userId]
-    );
-
-    const statusMap = { todo: 0, in_progress: 0, done: 0 };
-    tasksByStatusResult.rows.forEach(row => {
-      statusMap[row.status] = parseInt(row.count);
-    });
+    // Consistency trend — last 30 days per-day pct
+    const trendResult = await db.query(`
+      SELECT
+        date::date AS d,
+        SUM(CASE WHEN status='completed' THEN 1 ELSE 0 END)::float / NULLIF(COUNT(*),0) * 100 AS pct
+      FROM schedule_records
+      WHERE date >= NOW() - INTERVAL '30 days'
+      GROUP BY date::date
+      ORDER BY d ASC
+    `);
 
     res.json({
-      totalTasks: parseInt(totalTasksResult.rows[0].total),
-      tasksByStatus: statusMap,
-      tasksPerUser: tasksPerUserResult.rows,
-      overdueTasks: overdueResult.rows,
-      projects: projectsResult.rows,
-      myPendingTasks: myTasksResult.rows,
+      todos: {
+        total: totalTodos,
+        completed: completedTodos,
+        pending: pendingTodos,
+      },
+      topics: {
+        total: totalTopics,
+        completed: completedTopics,
+        inProgress: inProgressTopics,
+        skipped: skippedTopics,
+      },
+      subjectProgress: subjectProgress.rows,
+      consistency: {
+        last30Days: consistencyPct,
+        weekly: weeklyConsistency,
+        monthly: monthlyConsistency,
+      },
+      streak,
+      dailyCompleted,
+      consistencyTrend: trendResult.rows.map((r) => ({
+        date: r.d,
+        pct: Math.round(Number(r.pct)),
+      })),
     });
   } catch (err) {
     next(err);
   }
-};
+}
 
 module.exports = { getDashboardStats };

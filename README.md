@@ -1,328 +1,70 @@
-# 🚀 TaskFlow — Team Task Manager
+# GATE DA 2027 Preparation Tracker
 
-A full-stack collaborative task management platform designed to help teams efficiently organize, track, and manage their work using a modern Kanban-style workflow.
+> Converted from TaskFlow — a personal single-user GATE Data Science & AI preparation tracker.
 
----
+## Stack
 
-## 🌐 Live Links
+- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS v3, Recharts
+- **Backend**: Express.js, Node.js
+- **Database**: PostgreSQL (Railway / Supabase)
 
-- 🔗 Frontend: https://diplomatic-love-production.up.railway.app
-- 🔗 Backend API: https://taskflow-production-4aa5.up.railway.app/api
-- 📂 Repository: https://github.com/sumayyatabasum/taskflow
-  
----
+## Modules
 
-## ⚠️ Deployment Note
+| Module        | Description                                                                                                      |
+| ------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Dashboard** | Quote of the day, countdown to 1 Feb 2027, progress rings, consistency trend, subject progress bars, quick notes |
+| **To-Do**     | Daily study tasks with priority, deadline, status (pending/completed)                                            |
+| **Syllabus**  | Full GATE DA 2027 syllabus with topic-level status tracking (pending / in_progress / completed / skipped)        |
+| **Schedule**  | Date × Activity matrix — mark Theory / PYQ / Revision / Mock Test per day, monthly consistency charts            |
 
-The application was successfully deployed on Railway, and both frontend and backend services are running.
+## Setup
 
-However, due to a temporary Railway DNS resolution issue (NXDOMAIN), the live URL may not be accessible at the moment.
-
-All features are fully implemented and verified locally.
-
----
-
-## 📌 Overview
-
-TaskFlow is a scalable full-stack web application that enables teams to:
-
-- Manage projects collaboratively
-- Assign and track tasks
-- Visualize workflow using a Kanban board
-- Monitor productivity with analytics dashboards
-
-This project demonstrates real-world backend architecture, authentication, role-based access, and database design.
-
----
-
-## ✨ Key Features
-
-### 🔐 Authentication & Security
-
-- JWT-based authentication system
-- Secure password hashing using bcrypt
-- Protected routes with middleware
-
-### 📁 Project Management
-
-- Create and manage multiple projects
-- Add/remove team members
-- Role-based permissions (Admin / Member)
-
-### ✅ Task Management
-
-- Kanban board (To Do → In Progress → Done)
-- Task priorities and due dates
-- Assign tasks to users
-
-### 📊 Dashboard & Analytics
-
-- Task status distribution
-- Overdue task tracking
-- User-wise task insights
-- Project progress monitoring
-
-### 🔑 Role-Based Access Control (RBAC)
-
-- Admins: Full control
-- Members: Limited to assigned tasks
-
----
-
-## 📸 Screenshots
-
-### 🔐 Login Page
-![Login](./screenshots/login.png)
-
-### 📊 Dashboard
-![Dashboard](./screenshots/dashboard.png)
-
-### 📁 Projects
-![Projects](./screenshots/projects.png)
-
-### ✅ Tasks
-![Tasks](./screenshots/tasks.png)
-
----
-
-## 🧱 Tech Stack
-
-| Layer      | Technology                           |
-| ---------- | ------------------------------------ |
-| Frontend   | Next.js 14, TypeScript, Tailwind CSS |
-| Backend    | Node.js, Express.js                  |
-| Database   | PostgreSQL (Supabase / Railway)      |
-| Auth       | JWT, bcrypt                          |
-| Charts     | Recharts                             |
-| Deployment | Railway                              |
-
----
-
-## 🏗️ Architecture
-
-- Backend follows **MVC architecture**
-- RESTful API design
-- PostgreSQL with relational schema
-- Frontend uses **Next.js App Router**
-- Axios for API communication
-
----
-
-## ⚙️ Local Setup
-
-### 📌 Prerequisites
-
-- Node.js (v18+)
-- PostgreSQL OR Supabase account
-
----
-
-### 1️⃣ Clone Repository
+### 1. Apply database schema
 
 ```bash
-git clone https://github.com/sumayyatabasum/taskflow.git
-cd taskflow
+psql $DATABASE_URL -f backend/src/config/schema.sql
 ```
 
-### 2️⃣ Database Setup
-
-- Run schema:
-
-```bash
-psql -U postgres -d taskflow -f backend/src/config/schema.sql
-```
-
-OR use Supabase SQL Editor.
-
-### 3️⃣ Backend Setup
+### 2. Seed syllabus
 
 ```bash
 cd backend
 npm install
-cp .env.example .env
+node src/scripts/seedSyllabus.js
 ```
 
-- Edit .env:
+### 3. Backend
 
 ```bash
-PORT=5000
-DATABASE_URL=your_database_url
-JWT_SECRET=your_secret_key
-JWT_EXPIRES_IN=7d
-FRONTEND_URL=http://localhost:3000
-NODE_ENV=development
-```
-
-- Run backend:
-
-```bash
+cd backend
+cp .env.example .env   # fill in DATABASE_URL and FRONTEND_URL
 npm run dev
 ```
 
-### 4️⃣ Frontend Setup
+### 4. Frontend
 
 ```bash
 cd frontend
+cp .env.example .env.local   # set NEXT_PUBLIC_API_URL
 npm install
-cp .env.example .env.local
-```
-
-- Edit:
-  NEXT_PUBLIC_API_URL=http://localhost:5000/api
-
-- Run frontend:
-
-```bash
 npm run dev
 ```
 
----
+Open [http://localhost:3000](http://localhost:3000)
 
-## 📡 API Overview
+## What was removed from TaskFlow
 
-### 🔐 Auth
+- Projects, Teams, Members, Roles, Permissions
+- Shared workspaces, project-level task CRUD
+- Light mode / theme switcher
+- Auth guard (single-user, no login required)
 
-- POST /api/auth/signup
-- POST /api/auth/login
-- GET /api/auth/me
+## What was added
 
-### 📁 Projects
-
-- GET /api/projects
-- POST /api/projects
-- DELETE /api/projects/:id
-
-### ✅ Tasks
-
-- GET /api/projects/:id/tasks
-- POST /api/projects/:id/tasks
-- PATCH /api/projects/:id/tasks/:taskId
-
-### 📊 Dashboard
-
-- GET /api/dashboard
-
----
-
-## 📂 Project Structure
-
-```bash
-taskflow/
-├── backend/
-│   ├── src/
-│   │   ├── config/
-│   │   │   ├── db.js
-│   │   │   └── schema.sql
-│   │   ├── controllers/
-│   │   │   ├── authController.js
-│   │   │   ├── dashboardController.js
-│   │   │   ├── projectController.js
-│   │   │   └── taskController.js
-│   │   ├── middleware/
-│   │   │   ├── auth.js
-│   │   │   └── errorHandler.js
-│   │   ├── routes/
-│   │   │   └── index.js
-│   │   └── index.js
-│   ├── .env
-│   ├── .env.example
-│   ├── package.json
-│   └── railway.toml
-│
-├── frontend/
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── dashboard/page.tsx
-│   │   │   ├── login/page.tsx
-│   │   │   ├── projects/
-│   │   │   │   ├── page.tsx
-│   │   │   │   └── [projectId]/page.tsx
-│   │   │   ├── signup/page.tsx
-│   │   │   ├── globals.css
-│   │   │   ├── layout.tsx
-│   │   │   └── page.tsx
-│   │   ├── components/
-│   │   │   ├── tasks/
-│   │   │   │   ├── TaskCard.tsx
-│   │   │   │   └── TaskForm.tsx
-│   │   │   ├── AppLayout.tsx
-│   │   │   └── Modal.tsx
-│   │   ├── hooks/useAuth.tsx
-│   │   ├── lib/api.ts
-│   │   └── types/index.ts
-│   ├── .env.example
-│   ├── next.config.js
-│   ├── package.json
-│   ├── postcss.config.js
-│   ├── tailwind.config.js
-│   └── tsconfig.json
-│
-├── screenshots/
-│   ├── dashboard.png
-│   ├── projects.png
-│   └── tasks.png
-├── .gitignore
-└── README.md
-```
-
----
-
-## 🧠 Design Decisions
-
-- MVC pattern for clean backend structure
-- Parameterized queries → prevent SQL injection
-- Transactions for atomic operations
-- RBAC middleware for access control
-- Optimistic UI for better UX
-
----
-
-## 🚀 Deployment
-
-### Deployed using Railway:
-
-- Backend service
-- Frontend service
-- PostgreSQL database
-
----
-
-## 📈 Future Improvements
-
-- Real-time updates using WebSockets
-- Drag-and-drop Kanban
-- Notifications system
-- File attachments for tasks
-
----
-
-## ⭐ Conclusion
-
-### TaskFlow demonstrates full-stack development skills including:
-
-- API design
-- Authentication systems
-- Database modeling
-- Frontend architecture
-- Deployment
-
-This project is built to simulate a real-world team collaboration tool.
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome!
-
-1. Fork the repository
-2. Create a new branch
-3. Make your changes
-4. Submit a pull request
-   
----
-## 👩‍💻 Author
-
-Sumayya Tabasum
-
-- GitHub: https://github.com/sumayyatabasum
-- LinkedIn: https://www.linkedin.com/in/shaik-sumayya-68a9582a4/
+- GATE DA 2027 syllabus with 47 topics across 7 subjects
+- Daily schedule matrix (date × activity)
+- Consistency tracking (daily / weekly / monthly)
+- Study streak counter
+- Quote of the day rotation
+- Quick notes with auto-save
+- Countdown to 1 Feb 2027

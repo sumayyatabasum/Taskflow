@@ -6,40 +6,41 @@ const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
-// Middleware
+const allowedOrigins = [
+  "http://localhost:3000",
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://diplomatic-love-production.up.railway.app",
-    ],
+    origin: (origin, cb) => {
+      // allow requests with no origin (curl, Postman, same-origin)
+      if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+      cb(new Error("CORS: not allowed"));
+    },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
   }),
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Health check
-app.get("/health", (req, res) => {
-  res.json({ status: "ok", timestamp: new Date().toISOString() });
-});
+app.get("/health", (_req, res) =>
+  res.json({ status: "ok", timestamp: new Date().toISOString() }),
+);
 
-// API routes
 app.use("/api", routes);
 
-// 404 handler
 app.use((req, res) => {
   res.status(404).json({ error: `Route ${req.method} ${req.path} not found.` });
 });
 
-// Error handler
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🚀 Running on ${PORT}`);
-});
+app.listen(PORT, "0.0.0.0", () =>
+  console.log(`🚀 GATE Tracker API running on port ${PORT}`),
+);
 
 module.exports = app;

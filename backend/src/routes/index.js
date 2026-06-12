@@ -1,50 +1,80 @@
-const express = require('express');
-const { body } = require('express-validator');
-const { authenticate, requireProjectAdmin, attachProjectRole } = require('../middleware/auth');
-const { signup, login, getMe } = require('../controllers/authController');
-const { getProjects, getProject, createProject, addMember, removeMember, deleteProject } = require('../controllers/projectController');
-const { getTasks, getTask, createTask, updateTask, deleteTask } = require('../controllers/taskController');
-const { getDashboardStats } = require('../controllers/dashboardController');
+const express = require("express");
+const { body } = require("express-validator");
+const { authenticate } = require("../middleware/auth");
+
+const { signup, login, getMe } = require("../controllers/authController");
+const { getDashboardStats } = require("../controllers/dashboardController");
+const {
+  getTodos,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+} = require("../controllers/todoController");
+const {
+  getTopics,
+  updateTopic,
+  createTopic,
+  deleteTopic,
+} = require("../controllers/topicController");
+const {
+  getSchedule,
+  upsertRecord,
+  createActivity,
+  deleteActivity,
+} = require("../controllers/scheduleController");
+const { getNotes, updateNotes } = require("../controllers/notesController");
 
 const router = express.Router();
 
 // ── Auth ────────────────────────────────────────────────────────────────────
-router.post('/auth/signup', [
-  body('name').trim().notEmpty().withMessage('Name is required'),
-  body('email').isEmail().withMessage('Valid email required'),
-  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
-], signup);
+router.post(
+  "/auth/signup",
+  [
+    body("name").trim().notEmpty(),
+    body("email").isEmail(),
+    body("password").isLength({ min: 6 }),
+  ],
+  signup,
+);
 
-router.post('/auth/login', [
-  body('email').isEmail().withMessage('Valid email required'),
-  body('password').notEmpty().withMessage('Password is required'),
-], login);
+router.post(
+  "/auth/login",
+  [body("email").isEmail(), body("password").notEmpty()],
+  login,
+);
 
-router.get('/auth/me', authenticate, getMe);
+router.get("/auth/me", authenticate, getMe);
 
 // ── Dashboard ────────────────────────────────────────────────────────────────
-router.get('/dashboard', authenticate, getDashboardStats);
+router.get("/dashboard", getDashboardStats); // no auth needed for single-user
 
-// ── Projects ─────────────────────────────────────────────────────────────────
-router.get('/projects', authenticate, getProjects);
-router.post('/projects', authenticate, [
-  body('name').trim().notEmpty().withMessage('Project name is required'),
-], createProject);
-router.get('/projects/:projectId', authenticate, attachProjectRole, getProject);
-router.delete('/projects/:projectId', authenticate, requireProjectAdmin, deleteProject);
+// ── Todos ─────────────────────────────────────────────────────────────────────
+router.get("/todos", getTodos);
+router.post(
+  "/todos",
+  [
+    body("title").trim().notEmpty().withMessage("Title is required"),
+    body("priority").optional().isIn(["low", "medium", "high"]),
+  ],
+  createTodo,
+);
+router.put("/todos/:id", updateTodo);
+router.delete("/todos/:id", deleteTodo);
 
-// Project members (admin only)
-router.post('/projects/:projectId/members', authenticate, requireProjectAdmin, addMember);
-router.delete('/projects/:projectId/members/:userId', authenticate, requireProjectAdmin, removeMember);
+// ── Topics ────────────────────────────────────────────────────────────────────
+router.get("/topics", getTopics);
+router.post("/topics", createTopic);
+router.put("/topics/:id", updateTopic);
+router.delete("/topics/:id", deleteTopic);
 
-// ── Tasks ─────────────────────────────────────────────────────────────────────
-router.get('/projects/:projectId/tasks', authenticate, attachProjectRole, getTasks);
-router.get('/projects/:projectId/tasks/:taskId', authenticate, attachProjectRole, getTask);
-router.post('/projects/:projectId/tasks', authenticate, requireProjectAdmin, [
-  body('title').trim().notEmpty().withMessage('Task title is required'),
-  body('priority').optional().isIn(['low', 'medium', 'high']),
-], createTask);
-router.patch('/projects/:projectId/tasks/:taskId', authenticate, attachProjectRole, updateTask);
-router.delete('/projects/:projectId/tasks/:taskId', authenticate, requireProjectAdmin, deleteTask);
+// ── Schedule ──────────────────────────────────────────────────────────────────
+router.get("/schedule", getSchedule);
+router.post("/schedule", upsertRecord);
+router.post("/schedule/activities", createActivity);
+router.delete("/schedule/activities/:id", deleteActivity);
+
+// ── Notes ─────────────────────────────────────────────────────────────────────
+router.get("/notes", getNotes);
+router.put("/notes", updateNotes);
 
 module.exports = router;

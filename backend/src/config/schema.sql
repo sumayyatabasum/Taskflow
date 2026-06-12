@@ -1,59 +1,71 @@
--- TaskFlow Database Schema
+-- ============================================================
+-- GATE DA 2027 Preparation Tracker - Database Schema
+-- Run this to replace the old TaskFlow schema
+-- ============================================================
 
--- Users table
-CREATE TABLE IF NOT EXISTS users (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name VARCHAR(100) NOT NULL,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  password_hash VARCHAR(255) NOT NULL,
-  avatar_color VARCHAR(7) DEFAULT '#6366f1',
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
+-- Drop old tables (team/project features)
+DROP TABLE IF EXISTS tasks CASCADE;
+DROP TABLE IF EXISTS project_members CASCADE;
+DROP TABLE IF EXISTS projects CASCADE;
 
--- Projects table
-CREATE TABLE IF NOT EXISTS projects (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name VARCHAR(150) NOT NULL,
-  description TEXT,
-  created_by UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
+-- Keep users table as-is (auth remains)
 
--- Project members (join table with roles)
-CREATE TABLE IF NOT EXISTS project_members (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
-  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  role VARCHAR(20) NOT NULL CHECK (role IN ('admin', 'member')) DEFAULT 'member',
-  joined_at TIMESTAMPTZ DEFAULT NOW(),
-  UNIQUE(project_id, user_id)
-);
-
--- Tasks table
-CREATE TABLE IF NOT EXISTS tasks (
+-- ── Todos ──────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS todos (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title VARCHAR(200) NOT NULL,
-  description TEXT,
-  status VARCHAR(20) NOT NULL CHECK (status IN ('todo', 'in_progress', 'done')) DEFAULT 'todo',
   priority VARCHAR(10) NOT NULL CHECK (priority IN ('low', 'medium', 'high')) DEFAULT 'medium',
-  due_date DATE,
-  project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
-  created_by UUID NOT NULL REFERENCES users(id) ON DELETE SET NULL,
-  assigned_to UUID REFERENCES users(id) ON DELETE SET NULL,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
+  deadline DATE,
+  status VARCHAR(20) NOT NULL CHECK (status IN ('pending', 'completed')) DEFAULT 'pending',
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- ── Syllabus ───────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS subjects (
+  id VARCHAR(50) PRIMARY KEY,
+  name VARCHAR(150) NOT NULL,
+  sort_order INT DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS topics (
+  id VARCHAR(50) PRIMARY KEY,
+  subject_id VARCHAR(50) NOT NULL REFERENCES subjects(id) ON DELETE CASCADE,
+  topic_name VARCHAR(300) NOT NULL,
+  status VARCHAR(20) NOT NULL CHECK (status IN ('pending', 'in_progress', 'completed', 'skipped')) DEFAULT 'pending',
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Indexes for performance
-CREATE INDEX IF NOT EXISTS idx_tasks_project_id ON tasks(project_id);
-CREATE INDEX IF NOT EXISTS idx_tasks_assigned_to ON tasks(assigned_to);
-CREATE INDEX IF NOT EXISTS idx_tasks_status ON tasks(status);
-CREATE INDEX IF NOT EXISTS idx_project_members_user ON project_members(user_id);
-CREATE INDEX IF NOT EXISTS idx_project_members_project ON project_members(project_id);
+CREATE INDEX IF NOT EXISTS idx_topics_subject ON topics(subject_id);
+CREATE INDEX IF NOT EXISTS idx_topics_status ON topics(status);
 
--- Auto-update updated_at trigger
+-- ── Schedule ───────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS schedule_activities (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  activity_name VARCHAR(100) NOT NULL,
+  sort_order INT DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS schedule_records (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  date DATE NOT NULL,
+  activity_id UUID NOT NULL REFERENCES schedule_activities(id) ON DELETE CASCADE,
+  status VARCHAR(20) NOT NULL CHECK (status IN ('completed', 'not_completed')) DEFAULT 'not_completed',
+  UNIQUE(date, activity_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_schedule_records_date ON schedule_records(date);
+
+-- ── Notes ──────────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS notes (
+  id INT PRIMARY KEY DEFAULT 1,
+  content TEXT DEFAULT '',
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Seed single notes row
+INSERT INTO notes(id, content) VALUES (1, '') ON CONFLICT DO NOTHING;
+
+-- ── Auto-update triggers ───────────────────────────────────────────────────
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -62,11 +74,18 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users
+DROP TRIGGER IF EXISTS trg_topics_updated_at ON topics;
+CREATE TRIGGER trg_topics_updated_at BEFORE UPDATE ON topics
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_projects_updated_at BEFORE UPDATE ON projects
+DROP TRIGGER IF EXISTS trg_notes_updated_at ON notes;
+CREATE TRIGGER trg_notes_updated_at BEFORE UPDATE ON notes
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_tasks_updated_at BEFORE UPDATE ON tasks
-  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+-- ── Seed default schedule activities ──────────────────────────────────────
+INSERT INTO schedule_activities (id, activity_name, sort_order) VALUES
+  ('a0000000-0000-0000-0000-000000000001', 'Theory',    1),
+  ('a0000000-0000-0000-0000-000000000002', 'PYQ',       2),
+  ('a0000000-0000-0000-0000-000000000003', 'Revision',  3),
+  ('a0000000-0000-0000-0000-000000000004', 'Mock Test', 4)
+ON CONFLICT DO NOTHING;
