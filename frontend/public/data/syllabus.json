@@ -1,109 +1,186 @@
 [
   {
+    "id": "apt",
+    "name": "General Aptitude",
+    "topics": [
+      { "id": "apt-01", "name": "Articles", "status": "pending" },
+      { "id": "apt-02", "name": "Tenses", "status": "pending" },
+      { "id": "apt-03", "name": "Adjectives", "status": "pending" },
+      { "id": "apt-04", "name": "Prepositions", "status": "pending" },
+      { "id": "apt-05", "name": "Conjunctions", "status": "pending" },
+      { "id": "apt-06", "name": "Verb-Noun Agreement", "status": "pending" },
+      { "id": "apt-07", "name": "Parts of Speech", "status": "pending" },
+      { "id": "apt-08", "name": "Vocabulary in Context", "status": "pending" },
+      { "id": "apt-09", "name": "Idioms and Phrases", "status": "pending" },
+      { "id": "apt-10", "name": "Reading Comprehension", "status": "pending" },
+      { "id": "apt-11", "name": "Narrative Sequencing", "status": "pending" },
+      { "id": "apt-12", "name": "Ratios", "status": "pending" },
+      { "id": "apt-13", "name": "Percentages", "status": "pending" },
+      { "id": "apt-14", "name": "Powers", "status": "pending" },
+      { "id": "apt-15", "name": "Exponents", "status": "pending" },
+      { "id": "apt-16", "name": "Logarithms", "status": "pending" },
+      {
+        "id": "apt-17",
+        "name": "Permutations and Combinations",
+        "status": "pending"
+      },
+      { "id": "apt-18", "name": "Series", "status": "pending" },
+      { "id": "apt-19", "name": "Numerical Computation", "status": "pending" },
+      { "id": "apt-20", "name": "Numerical Estimation", "status": "pending" },
+      { "id": "apt-21", "name": "Mensuration", "status": "pending" },
+      { "id": "apt-22", "name": "Geometry", "status": "pending" },
+      { "id": "apt-23", "name": "Elementary Statistics", "status": "pending" },
+      { "id": "apt-24", "name": "Elementary Probability", "status": "pending" },
+      { "id": "apt-25", "name": "Bar Graphs", "status": "pending" },
+      { "id": "apt-26", "name": "Pie Charts", "status": "pending" },
+      { "id": "apt-27", "name": "Tables", "status": "pending" },
+      {
+        "id": "apt-28",
+        "name": "2D and 3D Data Interpretation",
+        "status": "pending"
+      },
+      {
+        "id": "apt-29",
+        "name": "Maps and Data Interpretation",
+        "status": "pending"
+      },
+      { "id": "apt-30", "name": "Deduction", "status": "pending" },
+      { "id": "apt-31", "name": "Induction", "status": "pending" },
+      { "id": "apt-32", "name": "Analogy", "status": "pending" },
+      { "id": "apt-33", "name": "Numerical Relations", "status": "pending" },
+      { "id": "apt-34", "name": "Logical Reasoning", "status": "pending" },
+      { "id": "apt-35", "name": "Translation of Shapes", "status": "pending" },
+      { "id": "apt-36", "name": "Rotation", "status": "pending" },
+      { "id": "apt-37", "name": "Scaling", "status": "pending" },
+      { "id": "apt-38", "name": "Mirroring", "status": "pending" },
+      {
+        "id": "apt-39",
+        "name": "Assembling and Grouping Shapes",
+        "status": "pending"
+      },
+      {
+        "id": "apt-40",
+        "name": "Paper Folding and Cutting",
+        "status": "pending"
+      },
+      {
+        "id": "apt-41",
+        "name": "2D and 3D Pattern Recognition",
+        "status": "pending"
+      }
+    ]
+  },
+  {
     "id": "prob-stats",
     "name": "Probability and Statistics",
     "topics": [
-      {
-        "id": "ps-01",
-        "name": "Counting (permutations and combinations)",
-        "status": "pending"
-      },
-      {
-        "id": "ps-02",
-        "name": "Probability axioms, sample space, events",
-        "status": "pending"
-      },
-      {
-        "id": "ps-03",
-        "name": "Independent and mutually exclusive events",
-        "status": "pending"
-      },
-      {
-        "id": "ps-04",
-        "name": "Marginal, conditional and joint probability",
-        "status": "pending"
-      },
-      { "id": "ps-05", "name": "Bayes Theorem", "status": "pending" },
+      { "id": "ps-01", "name": "Counting — Permutations", "status": "pending" },
+      { "id": "ps-02", "name": "Counting — Combinations", "status": "pending" },
+      { "id": "ps-03", "name": "Probability Axioms", "status": "pending" },
+      { "id": "ps-04", "name": "Sample Space and Events", "status": "pending" },
+      { "id": "ps-05", "name": "Independent Events", "status": "pending" },
       {
         "id": "ps-06",
-        "name": "Conditional expectation and variance",
+        "name": "Mutually Exclusive Events",
+        "status": "pending"
+      },
+      { "id": "ps-07", "name": "Marginal Probability", "status": "pending" },
+      { "id": "ps-08", "name": "Conditional Probability", "status": "pending" },
+      { "id": "ps-09", "name": "Joint Probability", "status": "pending" },
+      { "id": "ps-10", "name": "Bayes Theorem", "status": "pending" },
+      { "id": "ps-11", "name": "Conditional Expectation", "status": "pending" },
+      { "id": "ps-12", "name": "Conditional Variance", "status": "pending" },
+      { "id": "ps-13", "name": "Mean", "status": "pending" },
+      { "id": "ps-14", "name": "Median", "status": "pending" },
+      { "id": "ps-15", "name": "Mode", "status": "pending" },
+      { "id": "ps-16", "name": "Standard Deviation", "status": "pending" },
+      { "id": "ps-17", "name": "Correlation", "status": "pending" },
+      { "id": "ps-18", "name": "Covariance", "status": "pending" },
+      { "id": "ps-19", "name": "Random Variables", "status": "pending" },
+      {
+        "id": "ps-20",
+        "name": "Uniform Distribution (Discrete)",
+        "status": "pending"
+      },
+      { "id": "ps-21", "name": "Bernoulli Distribution", "status": "pending" },
+      { "id": "ps-22", "name": "Binomial Distribution", "status": "pending" },
+      {
+        "id": "ps-23",
+        "name": "Uniform Distribution (Continuous)",
         "status": "pending"
       },
       {
-        "id": "ps-07",
-        "name": "Mean, median, mode and standard deviation",
+        "id": "ps-24",
+        "name": "Exponential Distribution",
+        "status": "pending"
+      },
+      { "id": "ps-25", "name": "Poisson Distribution", "status": "pending" },
+      { "id": "ps-26", "name": "Normal Distribution", "status": "pending" },
+      {
+        "id": "ps-27",
+        "name": "Standard Normal Distribution",
+        "status": "pending"
+      },
+      { "id": "ps-28", "name": "t-Distribution", "status": "pending" },
+      {
+        "id": "ps-29",
+        "name": "Chi-Squared Distribution",
         "status": "pending"
       },
       {
-        "id": "ps-08",
-        "name": "Correlation and covariance",
+        "id": "ps-30",
+        "name": "Cumulative Distribution Function (CDF)",
         "status": "pending"
       },
-      {
-        "id": "ps-09",
-        "name": "Random variables, discrete distributions (Uniform, Bernoulli, Binomial)",
-        "status": "pending"
-      },
-      {
-        "id": "ps-10",
-        "name": "Continuous distributions (Uniform, Exponential, Poisson, Normal)",
-        "status": "pending"
-      },
-      {
-        "id": "ps-11",
-        "name": "Standard normal, t-distribution, chi-squared distributions",
-        "status": "pending"
-      },
-      {
-        "id": "ps-12",
-        "name": "CDF, Conditional PDF, Central Limit Theorem",
-        "status": "pending"
-      },
-      {
-        "id": "ps-13",
-        "name": "Confidence interval, z-test, t-test, chi-squared test",
-        "status": "pending"
-      }
+      { "id": "ps-31", "name": "Conditional PDF", "status": "pending" },
+      { "id": "ps-32", "name": "Central Limit Theorem", "status": "pending" },
+      { "id": "ps-33", "name": "Confidence Interval", "status": "pending" },
+      { "id": "ps-34", "name": "z-Test", "status": "pending" },
+      { "id": "ps-35", "name": "t-Test", "status": "pending" },
+      { "id": "ps-36", "name": "Chi-Squared Test", "status": "pending" }
     ]
   },
   {
     "id": "lin-alg",
     "name": "Linear Algebra",
     "topics": [
-      { "id": "la-01", "name": "Vector space, subspaces", "status": "pending" },
-      {
-        "id": "la-02",
-        "name": "Linear dependence and independence of vectors",
-        "status": "pending"
-      },
+      { "id": "la-01", "name": "Vector Space", "status": "pending" },
+      { "id": "la-02", "name": "Subspaces", "status": "pending" },
       {
         "id": "la-03",
-        "name": "Matrices, projection matrix, orthogonal matrix, idempotent matrix",
+        "name": "Linear Dependence of Vectors",
         "status": "pending"
       },
       {
         "id": "la-04",
-        "name": "Quadratic forms, partition matrix and their properties",
+        "name": "Linear Independence of Vectors",
+        "status": "pending"
+      },
+      { "id": "la-05", "name": "Matrices", "status": "pending" },
+      { "id": "la-06", "name": "Projection Matrix", "status": "pending" },
+      { "id": "la-07", "name": "Orthogonal Matrix", "status": "pending" },
+      { "id": "la-08", "name": "Idempotent Matrix", "status": "pending" },
+      { "id": "la-09", "name": "Quadratic Forms", "status": "pending" },
+      {
+        "id": "la-10",
+        "name": "Partition Matrix and Properties",
         "status": "pending"
       },
       {
-        "id": "la-05",
-        "name": "Systems of linear equations and solutions; Gaussian elimination",
+        "id": "la-11",
+        "name": "Systems of Linear Equations",
         "status": "pending"
       },
+      { "id": "la-12", "name": "Gaussian Elimination", "status": "pending" },
+      { "id": "la-13", "name": "Eigenvalues", "status": "pending" },
+      { "id": "la-14", "name": "Eigenvectors", "status": "pending" },
+      { "id": "la-15", "name": "Determinant", "status": "pending" },
+      { "id": "la-16", "name": "Rank and Nullity", "status": "pending" },
+      { "id": "la-17", "name": "Projections", "status": "pending" },
+      { "id": "la-18", "name": "LU Decomposition", "status": "pending" },
       {
-        "id": "la-06",
-        "name": "Eigenvalues and eigenvectors",
-        "status": "pending"
-      },
-      {
-        "id": "la-07",
-        "name": "Determinant, rank, nullity, projections",
-        "status": "pending"
-      },
-      {
-        "id": "la-08",
-        "name": "LU decomposition, Singular Value Decomposition (SVD)",
+        "id": "la-19",
+        "name": "Singular Value Decomposition (SVD)",
         "status": "pending"
       }
     ]
@@ -114,14 +191,17 @@
     "topics": [
       {
         "id": "co-01",
-        "name": "Functions of a single variable, limit, continuity and differentiability",
+        "name": "Functions of a Single Variable",
         "status": "pending"
       },
-      { "id": "co-02", "name": "Taylor series", "status": "pending" },
-      { "id": "co-03", "name": "Maxima and minima", "status": "pending" },
+      { "id": "co-02", "name": "Limits", "status": "pending" },
+      { "id": "co-03", "name": "Continuity", "status": "pending" },
+      { "id": "co-04", "name": "Differentiability", "status": "pending" },
+      { "id": "co-05", "name": "Taylor Series", "status": "pending" },
+      { "id": "co-06", "name": "Maxima and Minima", "status": "pending" },
       {
-        "id": "co-04",
-        "name": "Optimization involving a single variable",
+        "id": "co-07",
+        "name": "Optimization Involving a Single Variable",
         "status": "pending"
       }
     ]
@@ -131,66 +211,63 @@
     "name": "Programming, Data Structures and Algorithms",
     "topics": [
       { "id": "pd-01", "name": "Programming in Python", "status": "pending" },
+      { "id": "pd-02", "name": "Stacks", "status": "pending" },
+      { "id": "pd-03", "name": "Queues", "status": "pending" },
+      { "id": "pd-04", "name": "Linked Lists", "status": "pending" },
+      { "id": "pd-05", "name": "Trees", "status": "pending" },
+      { "id": "pd-06", "name": "Hash Tables", "status": "pending" },
+      { "id": "pd-07", "name": "Linear Search", "status": "pending" },
+      { "id": "pd-08", "name": "Binary Search", "status": "pending" },
+      { "id": "pd-09", "name": "Selection Sort", "status": "pending" },
+      { "id": "pd-10", "name": "Bubble Sort", "status": "pending" },
+      { "id": "pd-11", "name": "Insertion Sort", "status": "pending" },
+      { "id": "pd-12", "name": "Merge Sort", "status": "pending" },
+      { "id": "pd-13", "name": "Quick Sort", "status": "pending" },
       {
-        "id": "pd-02",
-        "name": "Basic data structures: stacks, queues, linked lists, trees, hash tables",
+        "id": "pd-14",
+        "name": "Introduction to Graph Theory",
         "status": "pending"
       },
       {
-        "id": "pd-03",
-        "name": "Search algorithms: linear and binary search",
+        "id": "pd-15",
+        "name": "Graph Traversals (BFS / DFS)",
         "status": "pending"
       },
-      {
-        "id": "pd-04",
-        "name": "Basic sorting: selection, bubble, insertion sort",
-        "status": "pending"
-      },
-      {
-        "id": "pd-05",
-        "name": "Divide and conquer: mergesort, quicksort",
-        "status": "pending"
-      },
-      {
-        "id": "pd-06",
-        "name": "Introduction to graph theory",
-        "status": "pending"
-      },
-      {
-        "id": "pd-07",
-        "name": "Basic graph algorithms: traversals and shortest path",
-        "status": "pending"
-      }
+      { "id": "pd-16", "name": "Shortest Path Algorithms", "status": "pending" }
     ]
   },
   {
     "id": "dbms",
     "name": "Database Management and Warehousing",
     "topics": [
+      { "id": "db-01", "name": "ER Model", "status": "pending" },
+      { "id": "db-02", "name": "Relational Model", "status": "pending" },
+      { "id": "db-03", "name": "Relational Algebra", "status": "pending" },
+      { "id": "db-04", "name": "Tuple Calculus", "status": "pending" },
+      { "id": "db-05", "name": "SQL", "status": "pending" },
+      { "id": "db-06", "name": "Integrity Constraints", "status": "pending" },
+      { "id": "db-07", "name": "Normal Forms", "status": "pending" },
+      { "id": "db-08", "name": "File Organization", "status": "pending" },
+      { "id": "db-09", "name": "Indexing", "status": "pending" },
+      { "id": "db-10", "name": "Data Types", "status": "pending" },
+      { "id": "db-11", "name": "Normalization", "status": "pending" },
+      { "id": "db-12", "name": "Discretization", "status": "pending" },
+      { "id": "db-13", "name": "Sampling", "status": "pending" },
+      { "id": "db-14", "name": "Data Compression", "status": "pending" },
       {
-        "id": "db-01",
-        "name": "ER model, relational model, relational algebra, tuple calculus",
+        "id": "db-15",
+        "name": "Data Warehouse Modelling",
         "status": "pending"
       },
-      { "id": "db-02", "name": "SQL", "status": "pending" },
       {
-        "id": "db-03",
-        "name": "Integrity constraints, normal form, file organization, indexing",
+        "id": "db-16",
+        "name": "Schema for Multidimensional Data Models",
         "status": "pending"
       },
+      { "id": "db-17", "name": "Concept Hierarchies", "status": "pending" },
       {
-        "id": "db-04",
-        "name": "Data types, normalization, discretization, sampling, compression",
-        "status": "pending"
-      },
-      {
-        "id": "db-05",
-        "name": "Data warehouse modelling: schema for multidimensional data models",
-        "status": "pending"
-      },
-      {
-        "id": "db-06",
-        "name": "Concept hierarchies, measures: categorization and computations",
+        "id": "db-18",
+        "name": "Measures — Categorization and Computations",
         "status": "pending"
       }
     ]
@@ -201,39 +278,57 @@
     "topics": [
       {
         "id": "ml-01",
-        "name": "Simple and multiple linear regression, ridge regression",
-        "status": "pending"
-      },
-      { "id": "ml-02", "name": "Logistic regression", "status": "pending" },
-      {
-        "id": "ml-03",
-        "name": "k-Nearest Neighbour, Naive Bayes classifier",
+        "name": "Simple Linear Regression",
         "status": "pending"
       },
       {
-        "id": "ml-04",
-        "name": "Linear Discriminant Analysis, Support Vector Machine",
+        "id": "ml-02",
+        "name": "Multiple Linear Regression",
         "status": "pending"
       },
-      { "id": "ml-05", "name": "Decision trees", "status": "pending" },
+      { "id": "ml-03", "name": "Ridge Regression", "status": "pending" },
+      { "id": "ml-04", "name": "Logistic Regression", "status": "pending" },
       {
-        "id": "ml-06",
-        "name": "Bias-variance trade-off, cross-validation (LOO, k-fold)",
+        "id": "ml-05",
+        "name": "k-Nearest Neighbour (kNN)",
         "status": "pending"
       },
+      { "id": "ml-06", "name": "Naive Bayes Classifier", "status": "pending" },
       {
         "id": "ml-07",
-        "name": "Multi-layer perceptron, feed-forward neural network",
+        "name": "Linear Discriminant Analysis (LDA)",
         "status": "pending"
       },
       {
         "id": "ml-08",
-        "name": "Clustering: k-means/k-medoid, hierarchical clustering",
+        "name": "Support Vector Machine (SVM)",
+        "status": "pending"
+      },
+      { "id": "ml-09", "name": "Decision Trees", "status": "pending" },
+      { "id": "ml-10", "name": "Bias-Variance Trade-off", "status": "pending" },
+      {
+        "id": "ml-11",
+        "name": "Leave-One-Out Cross-Validation",
+        "status": "pending"
+      },
+      { "id": "ml-12", "name": "k-Fold Cross-Validation", "status": "pending" },
+      { "id": "ml-13", "name": "Multi-Layer Perceptron", "status": "pending" },
+      {
+        "id": "ml-14",
+        "name": "Feed-Forward Neural Network",
+        "status": "pending"
+      },
+      { "id": "ml-15", "name": "k-Means Clustering", "status": "pending" },
+      { "id": "ml-16", "name": "k-Medoid Clustering", "status": "pending" },
+      { "id": "ml-17", "name": "Hierarchical Clustering", "status": "pending" },
+      {
+        "id": "ml-18",
+        "name": "Dimensionality Reduction",
         "status": "pending"
       },
       {
-        "id": "ml-09",
-        "name": "Dimensionality reduction, PCA",
+        "id": "ml-19",
+        "name": "Principal Component Analysis (PCA)",
         "status": "pending"
       }
     ]
@@ -242,29 +337,24 @@
     "id": "ai",
     "name": "Artificial Intelligence",
     "topics": [
+      { "id": "ai-01", "name": "Uninformed Search", "status": "pending" },
+      { "id": "ai-02", "name": "Informed Search", "status": "pending" },
+      { "id": "ai-03", "name": "Adversarial Search", "status": "pending" },
+      { "id": "ai-04", "name": "Propositional Logic", "status": "pending" },
+      { "id": "ai-05", "name": "Predicate Logic", "status": "pending" },
       {
-        "id": "ai-01",
-        "name": "Search: informed, uninformed, adversarial",
+        "id": "ai-06",
+        "name": "Conditional Independence Representation",
         "status": "pending"
       },
       {
-        "id": "ai-02",
-        "name": "Logic: propositional, predicate",
+        "id": "ai-07",
+        "name": "Exact Inference — Variable Elimination",
         "status": "pending"
       },
       {
-        "id": "ai-03",
-        "name": "Conditional independence representation",
-        "status": "pending"
-      },
-      {
-        "id": "ai-04",
-        "name": "Exact inference through variable elimination",
-        "status": "pending"
-      },
-      {
-        "id": "ai-05",
-        "name": "Approximate inference through sampling",
+        "id": "ai-08",
+        "name": "Approximate Inference — Sampling",
         "status": "pending"
       }
     ]

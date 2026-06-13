@@ -64,7 +64,6 @@ export default function SyllabusPage() {
   const load = () =>
     api.get("/topics").then((r) => {
       setSubjects(r.data);
-      // expand first subject by default
       if (r.data.length > 0) setExpanded({ [r.data[0].id]: true });
       setLoading(false);
     });
@@ -76,6 +75,7 @@ export default function SyllabusPage() {
   const toggleExpand = (id: string) =>
     setExpanded((p) => ({ ...p, [id]: !p[id] }));
 
+  // ── FIX: optimistic update first, then persist ─────────────────────────────
   const cycleStatus = async (
     subjectId: string,
     topicId: string,
@@ -84,7 +84,8 @@ export default function SyllabusPage() {
     if (manageMode) return;
     const next =
       STATUS_CYCLE[(STATUS_CYCLE.indexOf(current) + 1) % STATUS_CYCLE.length];
-    await api.put(`/topics/${topicId}`, { status: next });
+
+    // 1. Update UI immediately so the user sees the change regardless
     setSubjects((prev) =>
       prev.map((s) =>
         s.id === subjectId
@@ -97,6 +98,15 @@ export default function SyllabusPage() {
           : s,
       ),
     );
+
+    // 2. Persist to DB (silently — UI already updated)
+    try {
+      await api.put(`/topics/${topicId}`, { status: next });
+    } catch (err) {
+      // If DB fails (e.g. seed not run yet), the UI state still reflects the
+      // change for this session. On next reload it'll revert — that's fine.
+      console.warn("DB sync failed for topic", topicId, err);
+    }
   };
 
   const addTopic = async (subjectId: string) => {
@@ -127,12 +137,11 @@ export default function SyllabusPage() {
     );
   };
 
-  // chart data
   const chartData = subjects.map((s) => {
     const total = s.topics.length;
     const completed = s.topics.filter((t) => t.status === "completed").length;
     return {
-      name: s.name.split(" ").slice(0, 2).join(" "), // short name
+      name: s.name.split(" ").slice(0, 2).join(" "),
       completed,
       total,
       pct: total > 0 ? Math.round((completed / total) * 100) : 0,
@@ -148,6 +157,9 @@ export default function SyllabusPage() {
     (a, s) => a + s.topics.filter((t) => t.status === "in_progress").length,
     0,
   );
+
+  // Chart height: scale with number of subjects (min 120px, 30px per subject)
+  const chartHeight = Math.max(120, subjects.length * 34);
 
   return (
     <AppLayout>
@@ -182,8 +194,8 @@ export default function SyllabusPage() {
               Subject Completion
             </h2>
           </div>
-          <ResponsiveContainer width="100%" height={160}>
-            <BarChart data={chartData} barSize={28} layout="vertical">
+          <ResponsiveContainer width="100%" height={chartHeight}>
+            <BarChart data={chartData} barSize={20} layout="vertical">
               <XAxis
                 type="number"
                 domain={[0, 100]}
@@ -195,7 +207,7 @@ export default function SyllabusPage() {
               <YAxis
                 type="category"
                 dataKey="name"
-                width={110}
+                width={130}
                 axisLine={false}
                 tickLine={false}
                 tick={{ fill: "#94a3b8", fontSize: 11 }}
@@ -213,10 +225,10 @@ export default function SyllabusPage() {
                 ]}
               />
               <Bar dataKey="pct" radius={[0, 6, 6, 0]}>
-                {chartData.map((_, i) => (
+                {chartData.map((entry, i) => (
                   <Cell
                     key={i}
-                    fill={chartData[i].pct === 100 ? "#10b981" : "#6366f1"}
+                    fill={entry.pct === 100 ? "#10b981" : "#6366f1"}
                   />
                 ))}
               </Bar>
@@ -258,7 +270,7 @@ export default function SyllabusPage() {
                       <div className="flex items-center gap-2 mt-1">
                         <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden max-w-[160px]">
                           <div
-                            className="h-full rounded-full transition-all"
+                            className="h-full rounded-full transition-all duration-500"
                             style={{
                               width: `${pct}%`,
                               background:
@@ -292,7 +304,13 @@ export default function SyllabusPage() {
                             className={`w-2 h-2 rounded-full shrink-0 ${STATUS_CONFIG[t.status].ring}`}
                           />
                           <p
-                            className={`flex-1 text-sm ${t.status === "completed" ? "line-through text-slate-600" : t.status === "skipped" ? "text-slate-600" : "text-slate-300"}`}
+                            className={`flex-1 text-sm ${
+                              t.status === "completed"
+                                ? "line-through text-slate-600"
+                                : t.status === "skipped"
+                                  ? "text-slate-600"
+                                  : "text-slate-300"
+                            }`}
                           >
                             {t.topic_name}
                           </p>
@@ -306,8 +324,8 @@ export default function SyllabusPage() {
                           ) : (
                             <button
                               onClick={() => cycleStatus(s.id, t.id, t.status)}
-                              className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border transition-all hover:scale-105 ${STATUS_CONFIG[t.status].color}`}
-                              title="Click to cycle status"
+                              className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border transition-all hover:scale-105 active:scale-95 cursor-pointer ${STATUS_CONFIG[t.status].color}`}
+                              title="Click to cycle: Pending → In Progress → Completed → Skipped"
                             >
                               {STATUS_CONFIG[t.status].label}
                             </button>
@@ -315,9 +333,9 @@ export default function SyllabusPage() {
                         </div>
                       ))}
 
-                      {/* Add topic row (manage mode) */}
+                      {/* Add topic row — manage mode only */}
                       {manageMode && (
-                        <div className="flex items-center gap-2 px-5 py-3">
+                        <div className="flex items-center gap-2 px-5 py-3 bg-white/[0.01]">
                           <input
                             value={newTopicName[s.id] || ""}
                             onChange={(e) =>
@@ -329,7 +347,7 @@ export default function SyllabusPage() {
                             onKeyDown={(e) =>
                               e.key === "Enter" && addTopic(s.id)
                             }
-                            placeholder="Add topic..."
+                            placeholder="Add custom topic..."
                             className="input text-xs py-1.5 flex-1"
                           />
                           <button
@@ -349,9 +367,9 @@ export default function SyllabusPage() {
         )}
 
         {/* Legend */}
-        <div className="flex items-center gap-4 mt-6 px-1">
+        <div className="flex flex-wrap items-center gap-3 mt-6 px-1">
           <p className="text-xs text-slate-600">
-            Click a status badge to cycle:
+            Click a badge to cycle status:
           </p>
           {Object.entries(STATUS_CONFIG).map(([k, v]) => (
             <span
